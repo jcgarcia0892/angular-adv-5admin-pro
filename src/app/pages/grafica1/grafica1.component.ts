@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-grafica1',
@@ -6,11 +6,25 @@ import { Component, OnInit } from '@angular/core';
   styles: [
   ]
 })
-export class Grafica1Component implements OnInit {
+export class Grafica1Component {
 
-  constructor() { }
+ public label1:string[] = ['Descargar Ventas', 'Ventas en Almacén', 'Ventas en Orden'];
+ public data1 = [
+  [500, 200, 200]
+];
 
-  ngOnInit(): void {
-  }
+public label2:string[] = ['Ingresos por Ventas', 'Ingreso por Servicios', 'Ingresos Pasivos'];
+public data2 = [
+ [500, 200, 200]
+];
 
+public label3:string[] = ['Costos Ventas', 'Costos en Almacén', 'Costos en Orden'];
+public data3 = [
+ [50, 800, 50]
+];
+
+public label4:string[] = ['Perdidas Ventas', 'Perdidas en Almacén', 'Perdidas en Orden'];
+public data4 = [
+ [300, 300, 300]
+];
 }
