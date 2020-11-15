@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Usuario } from 'src/app/models/usuario';
+import { UsuarioService } from 'src/app/services/usuario.service';
 import { SidebarService } from './../../services/sidebar.service';
 
 @Component({
@@ -8,13 +10,14 @@ import { SidebarService } from './../../services/sidebar.service';
   ]
 })
 export class SidebarComponent implements OnInit {
-
+  usuario: Usuario;
   menuItems:any;
 
-  constructor(  private sidebarService:SidebarService) {
+  constructor(  private sidebarService:SidebarService,
+                private usuarioService:UsuarioService) {
 
-    this.menuItems = this.sidebarService.menu;
-    console.log(this.menuItems);
+    this.menuItems  = this.sidebarService.menu;
+    this.usuario    = this.usuarioService.usuario;
 
   }
 
