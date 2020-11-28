@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, delay, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -35,6 +35,14 @@ export class UsuarioService {
 
   get uid():string {
     return this.usuario.uid;
+  }
+
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token
+      }
+    }
   }
 
   googleInit() {
@@ -75,7 +83,7 @@ export class UsuarioService {
     }).pipe(
       map((resp:any) => {
         const {email, google, nombre, role, img = '', uid} = resp.usuarioDB;
-        this.usuario  = new Usuario(nombre, email, '', google, img, role, uid);
+        this.usuario  = new Usuario(nombre, email, '', google, role, img, uid);
 
         localStorage.setItem('token', resp.token)
         return true;
@@ -108,11 +116,7 @@ export class UsuarioService {
       role: this.usuario.rol
     }
 
-    return this.http.put(`${this.base_url}/usuarios/${this.uid}`, data, {
-      headers: {
-        'x-token': this.token
-      }
-    })
+    return this.http.put(`${this.base_url}/usuarios/${this.uid}`, data, this.headers)
   }
 
   loginUsuario( formData:LoginForm ) {
@@ -133,6 +137,38 @@ export class UsuarioService {
                 })
               )
 
+  }
+
+  cargarUsuarios( desde:number = 0 ) {
+    const url = `${this.base_url}/usuarios?desde=${desde}`;
+    return this.http.get<{total: number, usuarios:any}>(url, this.headers)
+      .pipe(
+        delay(500),
+        map((resp) => {
+          const usuarios = resp.usuarios.map((user) => {
+            return new Usuario(user.nombre, user.email, '', user.google, user.rol, user.img, user.uid);
+          }); 
+
+          return {
+            total: resp.total,
+            usuarios
+          };
+        })
+      )
+
+  }
+
+  eliminarUsuario(usuario:Usuario) {
+    
+    const url = `${this.base_url}/usuarios/${usuario.uid}`;
+    return this.http.delete(url, this.headers);
+
+
+  }
+
+  actualizarRol( data:Usuario) {
+    console.log(data);
+    return this.http.put(`${this.base_url}/usuarios/${data.uid}`, data, this.headers)
   }
 
 }

@@ -16,6 +16,10 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { PerfilComponent } from './perfil/perfil.component';
 
+//Mantenimientos
+import { UsuariosComponent } from './mantenimiento/usuarios/usuarios.component';
+import { PagesRoutingModule } from './pages.routing.module';
+
 
 
 @NgModule({
@@ -27,15 +31,14 @@ import { PerfilComponent } from './perfil/perfil.component';
     AccountSettingsComponent,
     PromesasComponent,
     RxjsComponent,
-    PerfilComponent
+    PerfilComponent,
+    UsuariosComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
-    AppRoutingModule,
-    FormsModule,
+    PagesRoutingModule,
     ComponentsModule,
-    ReactiveFormsModule
   ],
   exports: [
     DashboardComponent,

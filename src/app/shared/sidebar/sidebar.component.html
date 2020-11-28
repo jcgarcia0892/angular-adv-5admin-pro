@@ -7,7 +7,7 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li class="user-profile">
-                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="usuario.imagenUrl" alt="user" /><span class="hide-menu"> {{usuario.nombre}} </span></a>
+                            <a class="has-arrow waves-effect waves-dark"     aria-expanded="false"><img [src]="usuario.imagenUrl" alt="user" /><span class="hide-menu"> {{usuario.nombre}} </span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li routerLinkActive="active"><a routerLink="profile">My Profile </a></li>
                                 <li><a href="javascript:void()">My Balance</a></li>
@@ -19,22 +19,24 @@
                         <li class="nav-devider"></li>
                         <li class="nav-small-cap">PERSONAL</li>
                         <li *ngFor="let item of menuItems">
-                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+
+                            <a class="has-arrow waves-effect waves-dark" aria-expanded="false">
                                 <i [class]="item.icono"></i>
                                 <span class="hide-menu">{{ item.titulo }}
-                                    <span class="label label-rouded label-themecolor pull-right"> {{item.submenu.length}} </span>
+                                    <span class="label label-rouded label-themecolor pull-right">{{item.submenu.length}} </span>
                                 </span>
                             </a>
                             <ul aria-expanded="false" class="collapse">
                                 <li *ngFor="let itemSubmenu of item.submenu">
-                                    <a [routerLink]="itemSubmenu.url"
+                                    <a  [routerLink]="itemSubmenu.url"
                                         routerLinkActive="active"
-                                        [routerLinkActiveOptions]="{exact: true}">{{itemSubmenu.titulo }}</a>
+                                        [routerLinkActiveOptions]="{exact: true}">{{ itemSubmenu.titulo }}</a>
                                 </li>
                                 
                             </ul>
                         </li>
                     </ul>
+
                 </nav>
                 <!-- End Sidebar navigation -->
             </div>

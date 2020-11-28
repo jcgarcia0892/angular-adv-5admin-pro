@@ -10,18 +10,20 @@ import { PagesModule } from './pages/pages.module';
 import { AppComponent } from './app.component';
 
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
+import { SharedModule } from './shared/shared.module';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    NopagefoundComponent,
+    NopagefoundComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AuthModule,
+    SharedModule,
     PagesModule
   ],
   providers: [],
