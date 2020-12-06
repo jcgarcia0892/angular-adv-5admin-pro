@@ -17,8 +17,8 @@ declare const gapi:any;
 })
 
 export class UsuarioService {
-
   base_url:string = environment.base_url;
+
   auth2:any;
   usuario: Usuario;
   constructor(  private http:HttpClient,

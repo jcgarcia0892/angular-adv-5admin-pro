@@ -18,7 +18,13 @@ import { PerfilComponent } from './perfil/perfil.component';
 
 //Mantenimientos
 import { UsuariosComponent } from './mantenimiento/usuarios/usuarios.component';
+import { HospitalesComponent } from './mantenimiento/hospitales/hospitales.component';
+import { MedicosComponent } from './mantenimiento/medicos/medicos.component';
+import { MedicoComponent } from './mantenimiento/medicos/medico.component';
 import { PagesRoutingModule } from './pages.routing.module';
+
+// Pipes
+import { PipesModule } from './../pipes/pipes.module';
 
 
 
@@ -32,13 +38,17 @@ import { PagesRoutingModule } from './pages.routing.module';
     PromesasComponent,
     RxjsComponent,
     PerfilComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    HospitalesComponent,
+    MedicosComponent,
+    MedicoComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     PagesRoutingModule,
     ComponentsModule,
+    PipesModule
   ],
   exports: [
     DashboardComponent,

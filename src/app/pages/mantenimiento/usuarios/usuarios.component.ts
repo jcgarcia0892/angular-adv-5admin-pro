@@ -1,17 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-
-//Librerias externas
 import Swal from 'sweetalert2';
-
-//Servicios
 import { BusquedaService } from 'src/app/services/busqueda.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { delay } from 'rxjs/operators';
 import { ModalImagenService } from 'src/app/services/modal-imagen.service';
+import { Subscription } from 'rxjs';
+import { Usuario } from 'src/app/models/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
-//Modelo
-import { Usuario } from 'src/app/models/usuario';
-import { delay } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+// Librerias externas
+
+// Servicios
+
+// Modelo
 
 @Component({
   selector: 'app-usuarios',
@@ -20,35 +20,31 @@ import { Subscription } from 'rxjs';
   ]
 })
 export class UsuariosComponent implements OnInit, OnDestroy {
-  imgSubs:Subscription;
-  usuarios:Usuario[];
-  usuariosTemp:Usuario[];
-  totalUsuarios: number = 0;
-  desde:number          = 0;
-  cargando:boolean      = true;
+  imgSubs: Subscription;
+  usuarios: Usuario[];
+  usuariosTemp: Usuario[];
+  totalUsuarios = 0;
+  desde          = 0;
+  cargando      = true;
 
   constructor(  private usuarioService: UsuarioService,
-                private busquedaService:BusquedaService,
-                private modalImagenService:ModalImagenService) { }
+                private busquedaService: BusquedaService,
+                private modalImagenService: ModalImagenService) { }
 
   ngOnInit(): void {
 
     this.cargarUsuarios();
     this.imgSubs  = this.modalImagenService.nuevaImagen
-      .pipe(
-        delay(100)
-      )
-      .subscribe(data => {
-      this.cargarUsuarios()
-    });
+      .pipe(delay(100))
+      .subscribe(data => this.cargarUsuarios());
 
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void  {
     this.imgSubs.unsubscribe();
   }
 
-  cargarUsuarios(){
+  cargarUsuarios(): void {
     this.cargando = true;
     this.usuarioService.cargarUsuarios(this.desde)
     .subscribe( ({total, usuarios}) => {
@@ -57,36 +53,36 @@ export class UsuariosComponent implements OnInit, OnDestroy {
       this.usuariosTemp = usuarios;
       this.cargando = false;
     });
-    
+
   }
 
 
 
-  cambiarPagina(valor:number){
+  cambiarPagina(valor: number): void {
     this.desde += valor;
 
-    if(this.desde < 0) {
+    if (this.desde < 0) {
       this.desde = 0;
-    }else if(this.desde >= this.totalUsuarios) {
+    }else if (this.desde >= this.totalUsuarios) {
       this.desde -= valor;
     }
     this.cargarUsuarios();
 
   }
 
-  buscar(termino:string) {
+  buscar(termino: string): any  {
 
-    if(termino.length === 0) {
+    if (termino.length === 0) {
       return this.usuarios = this.usuariosTemp;
     }
 
     this.busquedaService.buscar('usuarios', termino)
-      .subscribe( resp => this.usuarios = resp);
+      .subscribe( (resp: Usuario[]) => this.usuarios = resp);
   }
 
-  eliminarUsuario(usuario) {
-    
-    if(usuario.uid === this.usuarioService.uid) {
+  eliminarUsuario(usuario): any  {
+
+    if (usuario.uid === this.usuarioService.uid) {
       return Swal.fire('Error', 'No puede borrarse asi mismo', 'error');
     }
 
@@ -104,19 +100,19 @@ export class UsuariosComponent implements OnInit, OnDestroy {
               'Usuario borrado',
               `${usuario.nombre} fue eliminado correctamente`,
               'success'
-            )
-          })
+            );
+          });
       }
-    })
+    });
   }
 
-  cambiarRol(usuario) {
+  cambiarRol(usuario): void  {
     console.log(usuario);
     this.usuarioService.actualizarRol(usuario)
       .subscribe(console.log);
   }
 
-  abrirModal(usuario:Usuario) {
+  abrirModal(usuario: Usuario): void {
     this.modalImagenService.abrirModal('usuarios', usuario.uid, usuario.img);
   }
 

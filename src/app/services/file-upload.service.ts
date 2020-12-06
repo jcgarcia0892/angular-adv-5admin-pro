@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { environment } from './../../environments/environment';
+import { Injectable } from '@angular/core';
 
 
 
@@ -17,11 +17,11 @@ export class FileUploadService {
     archivo: File,
     tipo: 'usuarios' | 'hospitales' | 'medicos',
     id: string
-  ) {
+  ): Promise<any>  {
 
     try {
       const url = `${base_url}/uploads/${tipo}/${id}`;
-      const formData = new FormData();//Esto sirve para enviar información al backend ocn el fetch
+      const formData = new FormData(); // Esto sirve para enviar información al backend ocn el fetch
       formData.append('imagen', archivo);
       console.log(formData);
       const resp = await fetch( url, {
@@ -31,11 +31,12 @@ export class FileUploadService {
         },
         body: formData
       } );
+      console.log(resp);
 
       const data = await resp.json();
 
       console.log(data);
-      if(data) {
+      if (data) {
         return data.nombreArchivo;
       }else {
         console.log(data.msg);

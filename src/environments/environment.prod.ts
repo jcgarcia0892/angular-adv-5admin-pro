@@ -1,4 +1,4 @@
-//Cambiar ruta de la variable base_url
+// Cambiar ruta de la variable base_url
 
 export const environment = {
   production: true,
