@@ -12,36 +12,37 @@ import { FileUploadService } from './../../services/file-upload.service';
 })
 export class PerfilComponent implements OnInit {
 
-  perfilForm: FormGroup
+  perfilForm: FormGroup;
   usuario: Usuario;
   imagen: File;
   imgInstantanea: any = '';
- 
-  constructor(  private fb:FormBuilder,
+
+  constructor(  private fb: FormBuilder,
                 private usuarioService: UsuarioService,
-                private fileUpoladService:FileUploadService) {
-    
+                private fileUpoladService: FileUploadService) {
+
     this.usuario  = this.usuarioService.usuario;
-    console.log(this.usuario);             
+    console.log(this.usuario);
   }
 
   ngOnInit(): void {
 
     this.perfilForm = this.fb.group({
-      nombre: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]]
-    })
+      nombre: [this.usuario.nombre, Validators.required],
+      email: [this.usuario.email, [Validators.required, Validators.email]]
+    });
 
   }
 
-  actualizarForm() {
+  actualizarForm(): any {
     console.log(this.perfilForm.value);
     this.usuarioService.actualizarUsuario(this.perfilForm.value)
       .subscribe((data: any) => {
-        let {nombre, email} = data.usuario;
-
+        console.log(data);
+        const {nombre, email} = data.usuario;
         this.usuario.nombre = nombre;
         this.usuario.email = email;
+
         Swal.fire('Guardado', 'El usuario se ha guardado correctamente', 'success');
 
       }, (err) => {
@@ -50,22 +51,22 @@ export class PerfilComponent implements OnInit {
 
   }
 
-  actualizarImagen(imagen:File) {
+  actualizarImagen(imagen: File): any {
     this.imagen = imagen;
-    if(!imagen){
+    if (!imagen){
       return;
     }
     const render  = new FileReader();
     render.readAsDataURL(imagen);
     render.onloadend  = () => {
       this.imgInstantanea = render.result;
-    }
+    };
 
   }
 
-  subirImagen(){
+  subirImagen(): any{
     this.fileUpoladService.actualizarFoto(this.imagen, 'usuarios', this.usuario.uid)
-      .then((nombreImagen:any) => {
+      .then((nombreImagen: any) => {
         this.usuario.img  = nombreImagen;
         Swal.fire('Guardada', 'La imagen ha sido actualizada', 'success');
       })

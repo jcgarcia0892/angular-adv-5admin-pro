@@ -15,10 +15,14 @@
     height: 200px;
 }
 
+.w75 {
+    width: 75px;
+}
+
+
 .w100 {
     width: 100px;
 }
-
 .w140 {
     width: 140px;
 }

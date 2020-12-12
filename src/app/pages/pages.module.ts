@@ -1,3 +1,4 @@
+import { BusquedaComponent } from './busqueda/busqueda.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from './../shared/shared.module';
@@ -16,7 +17,7 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { PerfilComponent } from './perfil/perfil.component';
 
-//Mantenimientos
+// Mantenimientos
 import { UsuariosComponent } from './mantenimiento/usuarios/usuarios.component';
 import { HospitalesComponent } from './mantenimiento/hospitales/hospitales.component';
 import { MedicosComponent } from './mantenimiento/medicos/medicos.component';
@@ -41,7 +42,8 @@ import { PipesModule } from './../pipes/pipes.module';
     UsuariosComponent,
     HospitalesComponent,
     MedicosComponent,
-    MedicoComponent
+    MedicoComponent,
+    BusquedaComponent
   ],
   imports: [
     CommonModule,
@@ -57,7 +59,8 @@ import { PipesModule } from './../pipes/pipes.module';
     PagesComponent,
     AccountSettingsComponent,
     PromesasComponent,
-    RxjsComponent
+    RxjsComponent,
+    BusquedaComponent
   ]
 })
 export class PagesModule { }
